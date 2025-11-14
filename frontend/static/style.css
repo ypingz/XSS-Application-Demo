@@ -1,0 +1,14 @@
+/* frontend/static/style.css - minimal styles */
+body { font-family: Arial, sans-serif; background:#f7f8fa; color:#222; }
+.container { width: 900px; margin: 24px auto; background: #fff; padding: 20px; box-shadow: 0 2px 6px rgba(0,0,0,0.08); border-radius:6px;}
+header h1 { margin:0; }
+.subtitle { color:#666; margin-top:6px; }
+.news-item { background:#fcfcfc; padding:10px; border-left:4px solid #007acc; margin-bottom:10px;}
+.post-form { margin-top:16px; }
+.post-form textarea { font-family: inherit; font-size:14px; }
+.post-form input, .post-form textarea { width:100%; box-sizing:border-box; padding:6px; margin:6px 0; }
+.post-form button { padding:8px 14px; }
+.post { padding:10px 0; }
+.post .meta { color:#444; margin-bottom:6px; }
+.post .content { background:#fffbe6; padding:8px; border-radius:4px; }
+.hint { color:#a00; font-size:13px; }

