@@ -1,4 +1,4 @@
-# 🧪 XSS Attack Demonstration Project
+# XSS Attack Demonstration Project
 
 ## Overview
 This project demonstrates how a **Cross-Site Scripting (XSS)** attack works using a simple Python HTTP server.  
@@ -36,7 +36,7 @@ The core mechanism is:
 
 ---
 
-## 🚀 How to Run
+## How to Run
 
 ### 1. Start the local listener
 Run the Python receiver (`toy_receiver.py`):
@@ -84,7 +84,7 @@ Try injecting:
 
 ---
 
-## 🔄 Restoring to the Clean (Uninfected) Page
+## Restoring the Page
 To recover the web page to its **original, unpolluted state**:
 
 1. Remove any injected `<script>` tags or suspicious HTML content from database（./data/posts.json）.  
