@@ -12,7 +12,7 @@ The goal is to help demonstrate how unsanitized input leads to script injection 
 
 ---
 
-## ⚙️ Technical Principle
+## Technical Principle
 **XSS (Cross-Site Scripting)** occurs when user input is inserted into a web page without proper escaping or validation.  
 
 In this demo:
