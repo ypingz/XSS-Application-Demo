@@ -1,4 +1,4 @@
-import os, json, datetime
+import os, json, datetime, secrets
 from wsgiref.simple_server import make_server
 from urllib.parse import parse_qs, unquote_plus
 
@@ -62,6 +62,16 @@ def render_index():
     page = tpl.replace("{{posts}}", posts_html)
     return page.encode("utf-8")
 
+def parse_cookies(header):
+    cookies = {}
+    if not header:
+        return cookies
+    for chunk in header.split(";"):
+        if "=" in chunk:
+            name, value = chunk.split("=", 1)
+            cookies[name.strip()] = value.strip()
+    return cookies
+
 def application(environ, start_response):
     path = environ.get("PATH_INFO", "/")
     method = environ.get("REQUEST_METHOD", "GET")
@@ -77,7 +87,12 @@ def application(environ, start_response):
 
     if path == "/" and method == "GET":
         body = render_index()
-        start_response("200 OK", [("Content-Type","text/html; charset=utf-8")])
+        cookies = parse_cookies(environ.get("HTTP_COOKIE", ""))
+        headers = [("Content-Type","text/html; charset=utf-8")]
+        if "vuln_session" not in cookies:
+            token = secrets.token_hex(16)
+            headers.append(("Set-Cookie", f"vuln_session={token}; Path=/; "))
+        start_response("200 OK", headers)
         return [body]
 
     if path == "/post" and method == "POST":

@@ -1,0 +1,23 @@
+version: "3.9"
+
+services:
+  vulnerable-app:
+    build:
+      context: .
+      dockerfile: dockerfile
+    command: ["python", "backend/vulnerable_server.py"]
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/app
+
+  xss-listener:
+    build:
+      context: .
+      dockerfile: dockerfile
+    command: ["python", "exploit/toy_receiver.py"]
+    working_dir: /app
+    ports:
+      - "9000:9000"
+    volumes:
+      - .:/app
