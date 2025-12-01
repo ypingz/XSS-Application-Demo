@@ -74,14 +74,18 @@
 
 
     <section class="post-form">
-    <h2>Post Discussion</h2>
-    <form method="POST" action="/post" id="postForm">
-        <label>Author: <input type="text" name="author" placeholder="Your name (optional)"></label><br>
-        <label>Content:</label><br>
-        <textarea name="content" rows="6" cols="80" placeholder="Write your thoughts here..."></textarea><br>
-        <button type="submit">Submit Post</button>
-    </form>
-    <p class="hint">Note: This vulnerable demo version does not escape input, so you can use &lt;script&gt; injection to demonstrate XSS.</p>
+        <h2>Post Discussion</h2>
+        <form method="POST" action="/post" id="postForm">
+            <label>Author: <input type="text" name="author" placeholder="Your name (optional)"></label><br>
+            <label>Content:</label><br>
+            <textarea name="content" rows="6" cols="80" placeholder="Write your thoughts here..."></textarea><br>
+            <label>
+              <input type="checkbox" name="xss_protect" id="xssProtect">
+              Enable XSS Protection (escape HTML in this post)
+            </label><br>
+            <button type="submit">Submit Post</button>
+        </form>
+        <p class="hint">When XSS Protection is OFF, this vulnerable demo does not escape input, so you can use &lt;script&gt; injection to demonstrate XSS. When it is ON, HTML tags are escaped and scripts will not run.</p>
     </section>
 
 

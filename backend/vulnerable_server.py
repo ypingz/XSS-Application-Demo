@@ -1,11 +1,12 @@
 import os, json, datetime, secrets
+import html  # for escaping user input when XSS protection is enabled
 from wsgiref.simple_server import make_server
 from urllib.parse import parse_qs, unquote_plus
 
 ROOT = os.path.dirname(os.path.dirname(__file__))  # project root (folder above backend/)
 TEMPLATE_PATH = os.path.join(ROOT, "frontend", "templates", "index.html")
 STATIC_DIR = os.path.join(ROOT, "frontend", "static")
-DATA_DIR = os.path.join(ROOT, "data")
+DATA_DIR = os.path.join(ROOT, "data") 
 DATA_FILE = os.path.join(DATA_DIR, "posts.json")
 
 # ensure data dir and file
@@ -103,12 +104,20 @@ def application(environ, start_response):
         raw = environ["wsgi.input"].read(size).decode("utf-8")
         params = parse_qs(raw)
         # parse_qs returns lists
+        protect_flag = params.get("xss_protect", params.get("protect", ["off"]))[0]
+        # When checkbox is checked, browser usually sends "on" as its value
         author = params.get("author", ["anonymous"])[0]
         content = params.get("content", [""])[0]
-        # parse_qs returns percent-decoded strings, but keep as-is to show XSS
+        # parse_qs returns percent-decoded strings for us
+        if protect_flag.lower() in ("on", "1", "true", "yes"):
+            # When protection is ON, escape HTML so scripts are not executed
+            safe_content = html.escape(content)
+        else:
+            # When protection is OFF, keep raw content to demonstrate XSS
+            safe_content = content
         post = {
             "author": author,
-            "content": content,
+            "content": safe_content,
             "time": datetime.datetime.utcnow().isoformat() + "Z"
         }
         save_post(post)

@@ -33,8 +33,32 @@ The core mechanism is:
 })();
 </script>
 ```
+## XSS Protection Toggle
 
----
+To better demonstrate the difference between a **vulnerable** and a **protected** system,  **XSS Protection Toggle** has been introduced to the Post Discussion form.
+
+When enabled, the server will escape HTML special characters and prevent the injected scripts from executing.
+
+In this enhanced demo:
+
+- The user can choose whether to enable basic XSS protection.
+- When protection is **ON**, user input such as `<script>` is escaped on the server side.
+- When protection is **OFF**, the input is stored and rendered as-is, allowing full Stored XSS demonstration.
+- This allows a clear comparison between a vulnerable workflow and a protected workflow.
+
+### Example Behavior
+
+When **Protection OFF**, the following payload executes normally:
+
+```html
+<script>alert("Hacked!")</script>
+```
+
+When **Protection ON**, it is safely displayed as text:
+```html
+&lt;script&gt;alert("Hacked!")&lt;/script&gt;
+```
+The protection mechanism works by performing server-side output encoding, converting HTML control characters into safe textual entities so that the browser interprets the user input as plain text instead of executable JavaScript.
 
 ## How to Run
 
