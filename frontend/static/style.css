@@ -1,14 +1,238 @@
-/* frontend/static/style.css - minimal styles */
-body { font-family: Arial, sans-serif; background:#f7f8fa; color:#222; }
-.container { width: 900px; margin: 24px auto; background: #fff; padding: 20px; box-shadow: 0 2px 6px rgba(0,0,0,0.08); border-radius:6px;}
-header h1 { margin:0; }
-.subtitle { color:#666; margin-top:6px; }
-.news-item { background:#fcfcfc; padding:10px; border-left:4px solid #007acc; margin-bottom:10px;}
-.post-form { margin-top:16px; }
-.post-form textarea { font-family: inherit; font-size:14px; }
-.post-form input, .post-form textarea { width:100%; box-sizing:border-box; padding:6px; margin:6px 0; }
-.post-form button { padding:8px 14px; }
-.post { padding:10px 0; }
-.post .meta { color:#444; margin-bottom:6px; }
-.post .content { background:#fffbe6; padding:8px; border-radius:4px; }
-.hint { color:#a00; font-size:13px; }
+/* frontend/static/style.css - richer styles */
+
+/* Base page layout */
+body {
+  font-family: Arial, sans-serif;
+  background: #f0f2f5;
+  color: #222;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  width: 900px;
+  max-width: 95%;
+  margin: 24px auto;
+  background: #ffffff;
+  padding: 20px 24px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+  border-radius: 6px;
+  box-sizing: border-box;
+}
+
+/* HTML header element*/
+header {
+  border-bottom: 1px solid #e0e0e0;
+  padding-bottom: 8px;
+  margin-bottom: 12px;
+}
+
+header h1 {
+  margin: 0;
+  font-size: 24px;
+}
+
+/* Optional subtitle under the main title */
+.subtitle {
+  color: #666;
+  margin-top: 6px;
+  font-size: 14px;
+}
+
+/* Optional "badge" label, only used if present in HTML */
+.badge {
+  display: inline-block;
+  padding: 2px 6px;
+  font-size: 12px;
+  border-radius: 4px;
+  margin-left: 6px;
+}
+
+.badge-danger {
+  background: #c0392b;
+  color: #fff;
+}
+
+/* --- News / info box (if you show news) --- */
+.news-item {
+  background: #fcfcfc;
+  padding: 10px;
+  border-left: 4px solid #007acc;
+  margin-bottom: 10px;
+  font-size: 14px;
+}
+
+/*Generic headings & text */
+h2 {
+  margin-top: 16px;
+  margin-bottom: 8px;
+  font-size: 18px;
+}
+
+p {
+  line-height: 1.5;
+  margin: 6px 0;
+}
+
+/* --- Post form --- */
+.post-form {
+  margin-top: 16px;
+  padding: 12px 12px 16px;
+  border-radius: 6px;
+  background: #f7f9fc;
+  border: 1px solid #dde3ef;
+}
+
+.post-form label {
+  display: block;
+  font-weight: bold;
+  margin-top: 6px;
+}
+
+.post-form textarea {
+  font-family: inherit;
+  font-size: 14px;
+  resize: vertical;
+  min-height: 80px;
+}
+
+/* Inputs & textareas share sizing */
+.post-form input,
+.post-form textarea {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 6px;
+  margin: 6px 0;
+  border-radius: 4px;
+  border: 1px solid #ccd2e0;
+  outline: none;
+}
+
+.post-form input:focus,
+.post-form textarea:focus {
+  border-color: #4a6cf7;
+  box-shadow: 0 0 0 2px rgba(74,108,247,0.15);
+}
+
+/* Checkbox rows, if you have them */
+.form-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 4px;
+}
+
+/* Submit button */
+.post-form button {
+  padding: 8px 14px;
+  margin-top: 8px;
+  font-size: 14px;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+  background: #4a6cf7;
+  color: #fff;
+  transition: background 0.15s ease, transform 0.05s ease;
+}
+
+.post-form button:hover {
+  background: #3a56c2;
+}
+
+.post-form button:active {
+  transform: translateY(1px);
+}
+
+/* --- Posts list --- */
+.posts {
+  margin-top: 24px;
+}
+
+/* Container for each post */
+.post {
+  padding: 10px 0;
+  border-bottom: 1px solid #eceff5;
+}
+
+.post:last-child {
+  border-bottom: none;
+}
+
+/* Meta info (author, time) */
+.post .meta {
+  color: #444;
+  margin-bottom: 6px;
+  font-size: 13px;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+/* If HTML doesn’t have .author/.time spans, won’t apply */
+.post .author {
+  font-weight: bold;
+}
+
+.post .time {
+  color: #888;
+  font-style: italic;
+}
+
+/* Post content */
+.post .content {
+  background: #fffbe6;
+  padding: 8px;
+  border-radius: 4px;
+  font-size: 14px;
+  line-height: 1.5;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+.hint {
+  color: #a00;
+  font-size: 13px;
+}
+
+/* Optional “safe/danger” status classes;*/
+.safe {
+  color: #2e7d32;
+}
+
+.danger {
+  color: #c0392b;
+  font-weight: bold;
+}
+
+.attack-help {
+  margin-top: 16px;
+  font-size: 14px;
+  background: #f1f5ff;
+  border-left: 4px solid #4a6cf7;
+  padding: 10px;
+}
+
+code {
+  font-family: Consolas, "Courier New", monospace;
+  background: #f4f4f4;
+  padding: 2px 4px;
+  border-radius: 3px;
+}
+
+pre {
+  font-family: Consolas, "Courier New", monospace;
+  background: #f4f4f4;
+  padding: 8px;
+  border-radius: 4px;
+  overflow-x: auto;
+}
+
+/* --- Footer --- */
+footer {
+  margin-top: 24px;
+  font-size: 12px;
+  color: #777;
+  border-top: 1px solid #e0e0e0;
+  padding-top: 8px;
+}

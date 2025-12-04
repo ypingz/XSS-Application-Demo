@@ -8,6 +8,7 @@ TEMPLATE_PATH = os.path.join(ROOT, "frontend", "templates", "index.html")
 STATIC_DIR = os.path.join(ROOT, "frontend", "static")
 DATA_DIR = os.path.join(ROOT, "data") 
 DATA_FILE = os.path.join(DATA_DIR, "posts.json")
+LOG_FILE = os.path.join(DATA_DIR, "access.log")
 
 # ensure data dir and file
 os.makedirs(DATA_DIR, exist_ok=True)
@@ -124,6 +125,29 @@ def application(environ, start_response):
         # redirect back to index
         start_response("303 See Other", [("Location", "/")])
         return [b""]
+    
+    # Read only JSON API for posts
+    if path == "/api/posts" and method == "GET":
+        posts = load_posts()
+        payload = json.dumps(posts, ensure_ascii=False, indent=2).encode("utf-8")
+        start_response(
+            "200 OK", [("Content-Type", "application/json; charset=utf-8")]
+        )
+        return [payload]
+
+    # Simple debug endpoint
+    if path == "/debug" and method == "GET":
+        cookies = parse_cookies(environ.get("HTTP_COOKIE", ""))
+        sid = cookies.get("vuln_session", "none")
+        msg = (
+            "Debug Info:\n"
+            f"Client IP: {environ.get('REMOTE_ADDR', 'unknown')}\n"
+            f"Session ID: {sid}\n"
+            f"Post count: {len(load_posts())}\n"
+        )
+        start_response("200 OK", [("Content-Type", "text/plain; charset=utf-8")])
+        return [msg.encode("utf-8")]
+
 
     # fallback
     start_response("404 Not Found", [("Content-Type","text/plain")])
